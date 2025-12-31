@@ -1,7 +1,7 @@
 // hooks/useIntersectionObserver.ts
 'use client'
 
-import { useEffect, useRef, useState, RefObject } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface UseIntersectionObserverOptions {
   threshold?: number | number[]
@@ -17,7 +17,7 @@ interface IntersectionResult {
 
 export function useIntersectionObserver<T extends Element>(
   options: UseIntersectionObserverOptions = {}
-): [RefObject<T>, IntersectionResult] {
+): [React.RefObject<T | null>, IntersectionResult] {
   const {
     threshold = 0,
     root = null,
@@ -25,7 +25,9 @@ export function useIntersectionObserver<T extends Element>(
     freezeOnceVisible = false,
   } = options
 
-  const elementRef = useRef<T>(null)
+  // ✅ Correct typing
+  const elementRef = useRef<T | null>(null)
+
   const [result, setResult] = useState<IntersectionResult>({
     isIntersecting: false,
     entry: null,
@@ -44,7 +46,11 @@ export function useIntersectionObserver<T extends Element>(
           entry,
         })
       },
-      { threshold, root, rootMargin }
+      {
+        threshold,
+        root,
+        rootMargin,
+      }
     )
 
     observer.observe(element)

@@ -1,7 +1,7 @@
 // components/ui/Tooltip.tsx
 'use client'
 
-import { ReactNode, useState } from 'react'
+import { ReactNode, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -19,14 +19,21 @@ export default function Tooltip({
   delay = 200,
 }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false)
-  let timeout: NodeJS.Timeout
+
+  // ✅ Correct timeout typing for Next.js
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const showTooltip = () => {
-    timeout = setTimeout(() => setIsVisible(true), delay)
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(true)
+    }, delay)
   }
 
   const hideTooltip = () => {
-    clearTimeout(timeout)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
     setIsVisible(false)
   }
 
@@ -53,18 +60,21 @@ export default function Tooltip({
       onBlur={hideTooltip}
     >
       {children}
+
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
             className={cn(
               'absolute z-50 px-3 py-1.5 text-sm text-white bg-neutral-800 rounded-lg whitespace-nowrap',
               positions[position]
             )}
           >
             {content}
+
             <div
               className={cn(
                 'absolute w-0 h-0 border-4 border-transparent',
