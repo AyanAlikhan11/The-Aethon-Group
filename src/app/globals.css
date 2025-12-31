@@ -1,26 +1,176 @@
+
+/* ========================================
+   Tailwind v4 Entry
+   ======================================== */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ========================================
+   Theme Tokens (Tailwind v4 REQUIRED)
+   ======================================== */
+@theme {
+  /* ===== Primary (White + Gold) ===== */
+  --color-primary-50:  #fffdf7;
+  --color-primary-100: #fdf6e7;
+  --color-primary-200: #f7e7c3;
+  --color-primary-300: #efd79a;
+  --color-primary-400: #e5c26f;
+  --color-primary-500: #d4af37;
+  --color-primary-600: #c9a24d;
+  --color-primary-700: #b08a32;
+  --color-primary-800: #8f6f24;
+  --color-primary-900: #2b2414;
+
+  /* ===== Accent ===== */
+  --color-accent-gold: #d4af37;
+  --color-accent-gold-light: #f4d03f;
+  --color-accent-gold-dark: #b8960c;
+
+  /* ===== Neutral ===== */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+
+  /* ===== Functional ===== */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error:   #ef4444;
+  --color-info:    #3b82f6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ========================================
+   Base Styles
+   ======================================== */
+@layer base {
+  * {
+    @apply border-neutral-200;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 font-body;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold text-neutral-900;
+  }
+
+  ::selection {
+    background-color: var(--color-primary-600);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary-500);
+  }
+
+  a {
+    @apply transition-colors duration-200;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========================================
+   Components
+   ======================================== */
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 lg:py-24;
+  }
+
+  .glass {
+    @apply bg-white/70 backdrop-blur-lg border border-white/40;
+  }
+
+  .gradient-text {
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-600),
+      var(--color-accent-gold)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center font-medium rounded-xl
+           transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-xl border border-neutral-200 bg-white
+           placeholder:text-neutral-400
+           transition-all duration-200;
+  }
+
+  .input:focus {
+    box-shadow: 0 0 0 2px var(--color-primary-500);
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1
+           rounded-full text-xs font-medium;
+  }
+}
+
+/* ========================================
+   Utilities
+   ======================================== */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .aspect-golden {
+    aspect-ratio: 1.618 / 1;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* ========================================
+   Tailwind Theme (v4 REQUIRED)
+   ======================================== */
+@theme {
+  --font-body: var(--font-inter);
+  --font-heading: var(--font-playfair);
+  --font-accent: var(--font-montserrat);
+}
+
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
