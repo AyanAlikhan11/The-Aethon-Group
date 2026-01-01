@@ -1,6 +1,7 @@
-// components/ui/Button.tsx
+'use client'
+
 import { forwardRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, MotionProps } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,6 +11,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: 'left' | 'right'
   loading?: boolean
 }
+
+// Extend motion button props properly
+type MotionButtonProps = ButtonProps & MotionProps
+
+const MotionButton = motion.button
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -26,34 +32,71 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+    /* ---------------- BASE ---------------- */
+    const baseStyles = `
+      inline-flex items-center justify-center gap-2
+      font-medium
+      rounded-full
+      transition-all duration-300 ease-out
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+      disabled:opacity-50 disabled:pointer-events-none
+    `
 
+    /* ---------------- VARIANTS ---------------- */
     const variants = {
-      primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-lg shadow-primary-600/25 hover:shadow-xl hover:shadow-primary-600/30',
-      secondary: 'bg-neutral-800 text-white hover:bg-neutral-900 focus:ring-neutral-500',
-      accent: 'bg-gradient-to-r from-accent-gold to-accent-gold-light text-primary-900 hover:from-accent-gold-light hover:to-accent-gold focus:ring-accent-gold shadow-lg shadow-accent-gold/25',
-      outline: 'border-2 border-neutral-300 text-neutral-700 hover:bg-neutral-50 focus:ring-neutral-500',
-      ghost: 'text-neutral-600 hover:bg-neutral-100 focus:ring-neutral-500',
+      primary: `
+        bg-neutral-900 text-white
+        hover:bg-neutral-800
+        shadow-sm hover:shadow-md
+        focus-visible:ring-neutral-400
+      `,
+      secondary: `
+        bg-neutral-100 text-neutral-900
+        hover:bg-neutral-200
+        focus-visible:ring-neutral-300
+      `,
+      accent: `
+        bg-gradient-to-br from-[#E2B857] to-[#C9A24D]
+        text-neutral-900
+        shadow-[0_10px_30px_rgba(201,162,77,0.35)]
+        hover:shadow-[0_16px_45px_rgba(201,162,77,0.45)]
+        focus-visible:ring-[#C9A24D]
+      `,
+      outline: `
+        border border-neutral-300
+        text-neutral-800
+        bg-white/70 backdrop-blur-md
+        hover:bg-white
+        shadow-sm hover:shadow-md
+        focus-visible:ring-neutral-300
+      `,
+      ghost: `
+        text-neutral-700
+        hover:bg-neutral-100
+        focus-visible:ring-neutral-300
+      `,
     }
 
+    /* ---------------- SIZES ---------------- */
     const sizes = {
-      sm: 'px-4 py-2 text-sm gap-1.5',
-      md: 'px-6 py-3 text-base gap-2',
-      lg: 'px-8 py-4 text-lg gap-2.5',
+      sm: 'px-4 py-2 text-sm',
+      md: 'px-6 py-2.5 text-sm',
+      lg: 'px-8 py-3 text-base',
     }
 
     return (
-      <motion.button
+      <MotionButton
         ref={ref}
-  whileHover={{ scale: disabled ? 1 : 1.02 }}
-  whileTap={{ scale: disabled ? 1 : 0.98 }}
-  className={cn(baseStyles, variants[variant], sizes[size], className)}
-  disabled={disabled || loading}
-  {...(props as React.ComponentProps<typeof motion.button>)} // <-- cast here
->
+        whileHover={disabled ? undefined : { y: -2 }}
+        whileTap={disabled ? undefined : { scale: 0.97 }}
+        className={cn(baseStyles, variants[variant], sizes[size], className)}
+        disabled={disabled || loading}
+        {...(props as MotionButtonProps)}
+      >
+        {/* Loader */}
         {loading && (
           <svg
-            className="animate-spin h-5 w-5"
+            className="h-4 w-4 animate-spin"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -64,19 +107,30 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               cy="12"
               r="10"
               stroke="currentColor"
-              strokeWidth="4"
+              strokeWidth="3"
             />
             <path
               className="opacity-75"
               fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              d="M4 12a8 8 0 018-8v2a6 6 0 00-6 6H4z"
             />
           </svg>
         )}
-        {!loading && icon && iconPosition === 'left' && icon}
-        {children}
-        {!loading && icon && iconPosition === 'right' && icon}
-      </motion.button>
+
+        {!loading && icon && iconPosition === 'left' && (
+          <span className="transition-transform duration-300 group-hover:-translate-x-0.5">
+            {icon}
+          </span>
+        )}
+
+        <span>{children}</span>
+
+        {!loading && icon && iconPosition === 'right' && (
+          <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+            {icon}
+          </span>
+        )}
+      </MotionButton>
     )
   }
 )

@@ -160,6 +160,10 @@
   --font-heading: var(--font-playfair);
   --font-accent: var(--font-montserrat);
 }
+/* globals.css */
+.font-heading { font-family: var(--font-playfair); }
+.font-body { font-family: var(--font-inter); }
+.font-accent { font-family: var(--font-montserrat); }
 
 }
 

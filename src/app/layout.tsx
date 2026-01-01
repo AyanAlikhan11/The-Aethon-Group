@@ -5,23 +5,27 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import './globals.css'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  weight: ['300', '400', '500'],
   display: 'swap',
 })
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
+  weight: ['400', '500', '600'],
   display: 'swap',
 })
 
-const montserrat = Montserrat({ 
+const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
+  weight: ['400', '500', '600'],
   display: 'swap',
 })
+
 
 export const metadata: Metadata = {
   title: {
