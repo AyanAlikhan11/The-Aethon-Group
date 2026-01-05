@@ -25,17 +25,17 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Visit Us',
-    details: ['123 Business Avenue', 'New York, NY 10001'],
+    details: ['11/H/16, Moulana Md Ali Road', 'Kidderpore,Kolkata - 700023.','West Bengal , India'],
   },
   {
     icon: Phone,
     title: 'Call Us',
-    details: ['+1 (555) 123-4567', '+1 (555) 987-6543'],
+    details: ['+(91) 7439315210'],
   },
   {
     icon: Mail,
     title: 'Email Us',
-    details: ['info@theaethongroup.com', 'careers@theaethongroup.com'],
+    details: ['theaethongroup@gmail.com', 'careers@theaethongroup.com'],
   },
   {
     icon: Clock,
