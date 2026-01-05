@@ -194,25 +194,19 @@
 "use client";
 
 import { motion, animate, useMotionValue } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 
 /* ---------------- COUNT UP COMPONENT ---------------- */
-function CountUp({
-  to,
-  suffix = "",
-}: {
-  to: number;
-  suffix?: string;
-}) {
+function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
   const motionValue = useMotionValue(0);
   const [display, setDisplay] = useState("0");
 
   useEffect(() => {
     const controls = animate(motionValue, to, {
       duration: 2.5,
-      ease: [0.22, 1, 0.36, 1], // luxury easing
+      ease: [0.22, 1, 0.36, 1],
       onUpdate(latest) {
         setDisplay(Math.round(latest).toLocaleString());
       },
@@ -231,8 +225,27 @@ function CountUp({
 
 /* ---------------- HERO SECTION ---------------- */
 export default function Hero() {
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+
+  const handleWatchStory = async () => {
+    try {
+      const response = await fetch("/videos/story.mp4"); // Path to your video
+      if (!response.ok) throw new Error("Video not found");
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setVideoUrl(url);
+    } catch (err) {
+      console.error("Error fetching video:", err);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setVideoUrl(null);
+  };
+
   return (
-    <section className="relative min-h-screen bg-white overflow-hidden">
+    <section className="relative min-h-[85vh] bg-white overflow-hidden">
       {/* Ambient Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-white via-[#FFF6E5] to-[#C9A24D]/40 pointer-events-none" />
 
@@ -253,7 +266,6 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-28">
         <div className="max-w-4xl">
-
           {/* Tagline */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -309,6 +321,7 @@ export default function Hero() {
               variant="outline"
               size="md"
               icon={<Play className="w-4 h-4" />}
+              onClick={handleWatchStory}
             >
               Watch Our Story
             </Button>
@@ -331,15 +344,10 @@ export default function Hero() {
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.35 }}
               >
-                {/* Number */}
                 <div className="font-heading text-[2.6rem] lg:text-[2.8rem] text-neutral-900 tracking-tight">
                   <CountUp to={stat.value} suffix={stat.suffix} />
                 </div>
-
-                {/* Divider */}
                 <div className="mt-2 mb-3 h-[1px] w-10 bg-gradient-to-r from-[#C9A24D] to-transparent" />
-
-                {/* Label */}
                 <div className="font-body text-[11px] tracking-[0.25em] uppercase text-neutral-500">
                   {stat.label}
                 </div>
@@ -348,6 +356,26 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* ---------------- VIDEO MODAL ---------------- */}
+      {videoUrl && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+          <div className="relative w-full max-w-3xl p-4">
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-2 right-2 text-white p-2 rounded-full hover:bg-white/20 transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <video
+              src={videoUrl}
+              controls
+              autoPlay
+              className="w-full rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
