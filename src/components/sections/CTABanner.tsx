@@ -102,7 +102,7 @@ export default function CTABanner() {
               icon={<Phone className="w-5 h-5" />}
               className="border-[#C9A24D]/40 text-[#7A6224] hover:bg-[#FFF6E5]"
             >
-              +1 (555) 123-4567
+              + (91) 7439315210
             </Button>
           </motion.div>
 
