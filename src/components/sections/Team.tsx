@@ -9,9 +9,9 @@ import SectionHeading from '@/components/common/SectionHeading'
 
 const team = [
   {
-    name: 'Alexandra Sterling',
+    name: 'Rezaul Haque',
     role: 'Chief Executive Officer',
-    image: '/images/team/ceo.jpg',
+    image: '/images/team/ceo.png',
     bio: 'Former McKinsey partner with 20+ years in strategic consulting.',
     social: {
       linkedin: '#',
@@ -20,9 +20,9 @@ const team = [
     },
   },
   {
-    name: 'Marcus Chen',
+    name: 'Ayan Ali Khan',
     role: 'Chief Strategy Officer',
-    image: '/images/team/cso.jpg',
+    image: '/images/team/cso.jpeg',
     bio: 'Harvard MBA, specializing in digital transformation.',
     social: {
       linkedin: '#',
@@ -103,7 +103,7 @@ export default function Team() {
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
                   />
 
                   {/* Gold Overlay */}
