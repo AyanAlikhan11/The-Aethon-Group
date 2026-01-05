@@ -1,49 +1,50 @@
 // components/layout/Footer.tsx
-import Link from 'next/link'
-import { 
-  Linkedin, 
-  Twitter, 
-  Facebook, 
+import Link from "next/link";
+import {
+  Linkedin,
+  Twitter,
+  Facebook,
   Instagram,
   Mail,
   Phone,
   MapPin,
-  ArrowUpRight
-} from 'lucide-react'
-import Logo from '@/components/common/logo'
+  ArrowUpRight,
+} from "lucide-react";
+import Logo from "@/components/common/logo";
 
 const footerLinks = {
   company: [
-    { name: 'About Us', href: '/about' },
-    { name: 'Our Team', href: '/team' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'News', href: '/news' },
+    { name: "About Us", href: "/about" },
+    { name: "Our Team", href: "/team" },
+    { name: "Careers", href: "/careers" },
+    { name: "News", href: "/news" },
   ],
   services: [
-    { name: 'Strategic Planning', href: '/services/strategic-planning' },
-    { name: 'Business Transformation', href: '/services/transformation' },
-    { name: 'Leadership Advisory', href: '/services/leadership' },
-    { name: 'Market Analysis', href: '/services/market-analysis' },
+    { name: "Business Strategy", href: "/services/business-strategy" },
+    { name: "Management", href: "/services/transformation" },
+    { name: "Finance", href: "/services/finance" },
+    { name: "Web & App Development", href: "/services/web&app-development" },
+    {name: "Legalities",href: "/services/legalities"},
   ],
   resources: [
-    { name: 'Blog', href: '/blog' },
-    { name: 'Case Studies', href: '/case-studies' },
-    { name: 'Whitepapers', href: '/whitepapers' },
-    { name: 'Webinars', href: '/webinars' },
+    { name: "Blog", href: "/blog" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Whitepapers", href: "/whitepapers" },
+    { name: "Webinars", href: "/webinars" },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Terms of Service", href: "/terms" },
+    { name: "Cookie Policy", href: "/cookies" },
   ],
-}
+};
 
 const socialLinks = [
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-]
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+];
 
 export default function Footer() {
   return (
@@ -55,29 +56,34 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Logo variant="light" />
             <p className="mt-6 text-white/70 leading-relaxed max-w-sm">
-              Empowering organizations to achieve extraordinary results through 
-              strategic excellence and innovative solutions.
+              We're a dynamic team of experts dedicated to helping businesses
+              thrive in today's fast-paced world with comprehensive solutions
+              for growth and digital transformation.
             </p>
-            
+
             {/* Contact Info */}
             <div className="mt-8 space-y-3">
-              <a 
-                href="mailto:info@theaethongroup.com"
+              <a
+                href="mailto:theaethongroup@gmail.com"
                 className="flex items-center gap-3 text-white/70 hover:text-accent-gold transition-colors"
               >
                 <Mail className="w-5 h-5" />
                 info@theaethongroup.com
               </a>
-              <a 
+              <a
                 href="tel:+15551234567"
                 className="flex items-center gap-3 text-white/70 hover:text-accent-gold transition-colors"
               >
                 <Phone className="w-5 h-5" />
-                +1 (555) 123-4567
+                + (91) 7439315210
               </a>
               <div className="flex items-start gap-3 text-white/70">
                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span>123 Business Avenue<br />New York, NY 10001</span>
+                <span>
+                  11/H/16, Moulana Md Ali Road,
+                  <br /> Kidderpore,Kolkata - 700023.
+                  <br /> West Bengal , India
+                </span>
               </div>
             </div>
 
@@ -100,11 +106,13 @@ export default function Footer() {
           <div className="lg:col-span-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company */}
             <div>
-              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">Company</h4>
+              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">
+                Company
+              </h4>
               <ul className="space-y-3">
                 {footerLinks.company.map((link) => (
                   <li key={link.name}>
-                    <Link 
+                    <Link
                       href={link.href}
                       className="text-white/70 hover:text-accent-gold transition-colors inline-flex items-center gap-1 group"
                     >
@@ -118,11 +126,13 @@ export default function Footer() {
 
             {/* Services */}
             <div>
-              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">Services</h4>
+              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">
+                Services
+              </h4>
               <ul className="space-y-3">
                 {footerLinks.services.map((link) => (
                   <li key={link.name}>
-                    <Link 
+                    <Link
                       href={link.href}
                       className="text-white/70 hover:text-accent-gold transition-colors inline-flex items-center gap-1 group"
                     >
@@ -136,11 +146,13 @@ export default function Footer() {
 
             {/* Resources */}
             <div>
-              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">Resources</h4>
+              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">
+                Resources
+              </h4>
               <ul className="space-y-3">
                 {footerLinks.resources.map((link) => (
                   <li key={link.name}>
-                    <Link 
+                    <Link
                       href={link.href}
                       className="text-white/70 hover:text-accent-gold transition-colors inline-flex items-center gap-1 group"
                     >
@@ -154,7 +166,9 @@ export default function Footer() {
 
             {/* Newsletter */}
             <div>
-              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">Newsletter</h4>
+              <h4 className="font-heading font-semibold text-lg mb-6 text-accent-gold">
+                Newsletter
+              </h4>
               <p className="text-white/70 text-sm mb-4">
                 Subscribe to receive insights and updates.
               </p>
@@ -181,7 +195,8 @@ export default function Footer() {
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/50 text-sm">
-              © {new Date().getFullYear()} The Aethon Group. All rights reserved.
+              © {new Date().getFullYear()} The Aethon Group. All rights
+              reserved.
             </p>
             <div className="flex gap-6">
               {footerLinks.legal.map((link) => (
@@ -198,5 +213,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
