@@ -1,30 +1,30 @@
 // components/sections/About.tsx
-'use client'
+"use client";
 
-import { useRef } from 'react'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import Image from 'next/image'
-import { CheckCircle2 } from 'lucide-react'
-import Button from '@/components/ui/Button'
-import SectionHeading from '@/components/common/SectionHeading'
+import { useRef } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+import { CheckCircle2 } from "lucide-react";
+import Button from "@/components/ui/Button";
+import SectionHeading from "@/components/common/SectionHeading";
 
 const values = [
-  'Client-centric approach to every engagement',
-  'Data-driven insights and recommendations',
-  'Collaborative partnerships for lasting impact',
-  'Commitment to sustainable excellence',
-]
+  "Client-centric approach to every engagement",
+  "Data-driven insights and recommendations",
+  "Collaborative partnerships for lasting impact",
+  "Commitment to sustainable excellence",
+];
 
 export default function About() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { once: true, margin: '-100px' })
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end start'],
-  })
+    offset: ["start end", "end start"],
+  });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], [80, -80])
+  const imageY = useTransform(scrollYProgress, [0, 1], [80, -80]);
 
   return (
     <section
@@ -53,15 +53,17 @@ export default function About() {
             className="relative"
           >
             <motion.div style={{ y: imageY }} className="relative z-10">
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)]">
-                <Image
-                  src="/images/about-main.jpg"
-                  alt="The Aethon Group team"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </motion.div>
+  <div className="relative h-[520px] w-full rounded-2xl overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)]">
+    <Image
+      src="/images/about-main.png"
+      alt="The Aethon Group team"
+      fill
+      priority
+      className="object-cover"
+    />
+  </div>
+</motion.div>
+
 
             {/* Floating Experience Card */}
             <motion.div
@@ -79,7 +81,7 @@ export default function About() {
             >
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#E6C36A] to-[#B8913D] flex items-center justify-center">
-                  <span className="text-2xl font-bold text-white">25+</span>
+                  <span className="text-2xl font-bold text-white">3+</span>
                 </div>
                 <div>
                   <p className="text-sm text-neutral-500">Years of</p>
@@ -102,7 +104,7 @@ export default function About() {
             <SectionHeading
               tagline="About Us"
               title="Building Legacies of Success"
-              description="For over two decades, The Aethon Group has been the trusted advisor to Fortune 500 companies and emerging enterprises alike."
+              description="For the past three years, The Aethon Group has partnered with ambitious businesses to deliver strategic, results-driven solutions."
               className="text-neutral-900"
             />
 
@@ -135,5 +137,5 @@ export default function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }
