@@ -175,10 +175,10 @@ export default function Testimonials() {
             <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-black/10" />
 
             {/* Marquee */}
-            <div className="relative py-3">
+            <div className="relative py-2">
               <motion.div
-                className="flex items-center gap-10 w-max"
-                animate={{ x: ["0%", "-50%"] }}
+                className="flex items-center gap-15 w-max"
+                animate={{ x: ["0%", "-90%"] }}
                 transition={{
                   duration: 28,
                   repeat: Infinity,
@@ -188,12 +188,12 @@ export default function Testimonials() {
                 {[...logos, ...logos].map((logo, i) => (
                   <div
                     key={i}
-                    className="bg-white rounded-lg px-5 py-2 shadow-sm flex items-center justify-center hover:scale-105 transition-transform"
+                    className="bg-white rounded-lg px-2 py-1 shadow-sm flex items-center justify-center hover:scale-105 transition-transform"
                   >
                     <Image
                       src={logo}
                       alt="Client logo"
-                      width={120}
+                      width={100}
                       height={40}
                       className="object-contain"
                     />
