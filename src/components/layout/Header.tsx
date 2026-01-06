@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import Logo from '@/components/common/logo'
 import Button from '@/components/ui/Button'
+import GetStartedModal from '@/components/ui/GetStartedModal'
 
 
 const navItems = [
@@ -15,7 +16,7 @@ const navItems = [
     name: 'Services', 
     href: '/services',
     submenu: [
-      { name: 'Strategic Consulting', href: '/services/strategic-consulting' },
+      { name: 'Strategic Planning', href: '/services/strategic-planning' },
       { name: 'Business Transformation', href: '/services/transformation' },
       { name: 'Leadership Advisory', href: '/services/leadership' },
       { name: 'Market Analysis', href: '/services/market-analysis' },
@@ -31,6 +32,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -108,9 +110,14 @@ export default function Header() {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <Button variant="primary" size="md">
-                Get Started
-              </Button>
+              <button
+        onClick={() => setOpen(true)}
+        className="rounded-xl bg-[#C9A24D] px-6 py-3 text-white font-medium hover:opacity-90 transition"
+      >
+        Get Started
+      </button>
+
+      <GetStartedModal open={open} onClose={() => setOpen(false)} />
             </div>
 
             {/* Mobile Menu Button */}
@@ -121,7 +128,7 @@ export default function Header() {
               {isMobileMenuOpen ? (
                 <X className={`w-6 h-6 ${isScrolled ? 'text-neutral-800' : 'text-white'}`} />
               ) : (
-                <Menu className={`w-6 h-6 ${isScrolled ? 'text-neutral-800' : 'text-white'}`} />
+                <Menu className={`w-6 h-6 ${isScrolled ? 'text-neutral-800' : 'text-ascent-gold'}`} />
               )}
             </button>
           </nav>
@@ -162,9 +169,12 @@ export default function Header() {
                   transition={{ delay: 0.5 }}
                   className="mt-8"
                 >
-                  <Button variant="accent" size="lg" className="w-full">
+                  <Button variant="accent" size="lg"
+                  onClick={() => setOpen(true)}
+                   className="w-full">
                     Get Started
                   </Button>
+                  <GetStartedModal open={open} onClose={() => setOpen(false)} />
                 </motion.div>
               </div>
             </div>
