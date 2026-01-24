@@ -1,186 +1,213 @@
-// components/layout/Header.tsx
-'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ChevronDown } from 'lucide-react'
-import Logo from '@/components/common/logo'
-import Button from '@/components/ui/Button'
-import GetStartedModal from '@/components/ui/GetStartedModal'
+"use client";
 
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import Logo from "@/components/common/logo";
+import GetStartedModal from "@/components/ui/GetStartedModal";
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { 
-    name: 'Services', 
-    href: '/services',
-    submenu: [
-      { name: 'Strategic Planning', href: '/services/strategic-planning' },
-      { name: 'Business Transformation', href: '/services/transformation' },
-      { name: 'Leadership Advisory', href: '/services/leadership' },
-      { name: 'Market Analysis', href: '/services/market-analysis' },
-    ]
-  },
-  { name: 'About', href: '/about' },
-  { name: 'Team', href: '/team' },
-  { name: 'Insights', href: '/insights' },
-  { name: 'Contact', href: '/contact' },
-]
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+  { name: "Team", href: "/team" },
+  { name: "Insights", href: "/insights" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
-  const [open, setOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const onScroll = () => setIsScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
+      {/* ================= HEADER ================= */}
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-accent-gold/35 backdrop-blur-md shadow-lg py-3' 
-            : 'bg-transparent py-6'
-        }`}
+        className="fixed top-4 left-0 right-0 z-50 pointer-events-none"
       >
-        <div className="container mx-auto px-4 lg:px-8">
-          <nav className="flex items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="relative z-10">
-              <Logo variant={isScrolled ? 'dark' : 'dark'} />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navItems.map((item) => (
-                <div
-                  key={item.name}
-                  className="relative"
-                  onMouseEnter={() => item.submenu && setActiveSubmenu(item.name)}
-                  onMouseLeave={() => setActiveSubmenu(null)}
-                >
-                  <Link
-                    href={item.href}
-                    className={`flex items-center gap-1 font-medium transition-colors ${
-                      isScrolled 
-                        ? 'text-neutral-800 hover:text-primary-600' 
-                        : 'text-black hover:text-accent-gold'
-                    }`}
-                  >
-                    {item.name}
-                    {item.submenu && <ChevronDown className="w-4 h-4" />}
-                  </Link>
-
-                  {/* Submenu */}
-                  <AnimatePresence>
-                    {item.submenu && activeSubmenu === item.name && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute top-full left-0 pt-4"
-                      >
-                        <div className="bg-white rounded-xl shadow-xl border border-neutral-100 py-3 min-w-[250px]">
-                          {item.submenu.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              className="block px-5 py-3 text-neutral-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <div className="hidden lg:block">
-              <button
-        onClick={() => setOpen(true)}
-        className="rounded-xl bg-[#C9A24D] px-6 py-3 text-white font-medium hover:opacity-90 transition"
-      >
-        Get Started
-      </button>
-
-      <GetStartedModal open={open} onClose={() => setOpen(false)} />
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden relative z-10 p-2"
+        <motion.nav className="pointer-events-auto w-full px-4">
+          {/* ================= MOBILE NAV ================= */}
+          <div className="lg:hidden flex items-center justify-between">
+            {/* LEFT : LOGO (+ BRAND ONLY INITIALLY) */}
+            <motion.div
+              layout
+              initial={{ scale: 0.9, rotate: -6 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 18 }}
+              className={`h-14 rounded-full bg-primary-600/20 backdrop-blur-md
+                shadow-md flex items-center transition-all duration-300
+                ${isScrolled ? "px-1" : "px-4 gap-3"}`}
             >
-              {isMobileMenuOpen ? (
-                <X className={`w-6 h-6 ${isScrolled ? 'text-neutral-800' : 'text-white'}`} />
-              ) : (
-                <Menu className={`w-6 h-6 ${isScrolled ? 'text-neutral-800' : 'text-ascent-gold'}`} />
+              <Logo showText={false} />
+
+              {/* BRAND NAME (ONLY WHEN NOT SCROLLED) */}
+              <AnimatePresence>
+                {!isScrolled && (
+                  <motion.span
+                    initial={{ opacity: 0, x: -6 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -6 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-l font-heading font-semibold tracking-wide text-neutral-900 whitespace-nowrap"
+                  >
+                    The <span className="text-primary-600">Aethon</span> Group
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* RIGHT : HAMBURGER (ALWAYS SPLIT) */}
+            <motion.button
+              layout
+              initial={{ scale: 0.9, rotate: 6 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 18 }}
+              onClick={() => setMobileOpen(true)}
+              className="h-13 w-13 rounded-full bg-primary-600 shadow-md
+                         flex items-center justify-center"
+            >
+              <Menu className="w-6 h-6 text-white" />
+            </motion.button>
+          </div>
+
+          {/* ================= DESKTOP NAV (UNCHANGED) ================= */}
+          <div
+            className={`hidden lg:flex items-center w-full
+              ${isScrolled ? "justify-between px-6" : "justify-center gap-20"}
+            `}
+          >
+            {/* LEFT */}
+            <AnimatePresence>
+              {isScrolled && (
+                <motion.div
+                  layout
+                  initial={{ scale: 0.7, rotate: -45, opacity: 0 }}
+                  animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                  exit={{ scale: 0.7, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 14 }}
+                  className="w-16 h-16 rounded-full bg-primary-600/40 backdrop-blur-md
+                             shadow-lg flex items-center justify-center"
+                >
+                  <Logo showText={false} />
+                </motion.div>
               )}
-            </button>
-          </nav>
-        </div>
+            </AnimatePresence>
+
+            {/* CENTER */}
+            <AnimatePresence>
+              {!isScrolled && (
+                <motion.div
+                  layout
+                  initial={{ scale: 0.92, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.88, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 18 }}
+                  className="flex items-center h-15 px-10 rounded-full
+                             bg-primary-600/20 backdrop-blur-md"
+                >
+                  <Logo />
+                  <div className="flex gap-8 ml-10">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="font-medium text-neutral-900 hover:text-primary-600 transition"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* RIGHT */}
+            <motion.div
+              layout
+              className={`shadow-lg flex items-center justify-center
+                ${
+                  isScrolled
+                    ? "w-14 h-14 rounded-full bg-primary-600"
+                    : "h-14 px-6 rounded-full bg-primary-600"
+                }`}
+            >
+              <button
+                onClick={() => setOpen(true)}
+                className="font-medium text-white text-sm"
+              >
+                Get Started
+              </button>
+            </motion.div>
+          </div>
+        </motion.nav>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* ================= MOBILE MENU ================= */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-0 z-40 lg:hidden"
-          >
-            <div className="absolute inset-0 bg-primary-900">
-              <div className="flex flex-col justify-center h-full px-8">
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block py-4 text-2xl font-heading text-white hover:text-accent-gold transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                ))}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="mt-8"
-                >
-                  <Button variant="accent" size="lg"
-                  onClick={() => setOpen(true)}
-                   className="w-full">
-                    Get Started
-                  </Button>
-                  <GetStartedModal open={open} onClose={() => setOpen(false)} />
-                </motion.div>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+            />
+
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 120, damping: 20 }}
+              className="fixed top-4 right-4 bottom-4 z-50 w-[85%] max-w-sm
+                         rounded-3xl bg-white/90 backdrop-blur-xl shadow-2xl"
+            >
+              <div className="flex items-center justify-between px-5 py-4 border-b">
+                <Logo />
+                <button onClick={() => setMobileOpen(false)}>
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-            </div>
-          </motion.div>
+
+              <div className="flex flex-col px-6 pt-8 gap-6">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="text-lg font-medium text-neutral-900 hover:text-primary-600"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+
+                <button
+                  onClick={() => {
+                    setOpen(true);
+                    setMobileOpen(false);
+                  }}
+                  className="mt-6 h-12 rounded-full bg-primary-600 text-white font-medium"
+                >
+                  Get Started
+                </button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
+
+      <GetStartedModal open={open} onClose={() => setOpen(false)} />
     </>
-  )
+  );
 }

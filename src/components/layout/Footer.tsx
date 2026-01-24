@@ -54,7 +54,7 @@ export default function Footer() {
         <div className="grid lg:grid-cols-6 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Logo variant="light" />
+             <h1 className="text-2xl text-accent-gold">THE AETHON GROUP</h1>
             <p className="mt-6 text-white/70 leading-relaxed max-w-sm">
               We're a dynamic team of experts dedicated to helping businesses
               thrive in today's fast-paced world with comprehensive solutions
